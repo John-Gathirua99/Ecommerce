@@ -1,0 +1,143 @@
+{%extends 'Notes/base.html'%}
+
+{%block content%}
+    
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .note-detail {
+            flex: 1;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            margin: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .note-detail h1 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+        .note-detail p {
+            color: #666;
+        }
+        .note-actions {
+            margin-top: 20px;
+        }
+        .note-actions button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .note-actions button:hover {
+            background-color: #0056b3;
+        }
+        .note-editor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+        .note-editor-inner {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .note-editor-inner textarea {
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+        .note-editor-inner button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Note Details</h1>
+    </header>
+
+    <div class="container">
+        <div class="note-detail">
+            <h1 id="noteTitle"> {{object.title}}</h1>
+            <p id="noteContent">{{object.notes}}</p>
+            <p id="noteContent">{{object.date_created}}</p>
+            <div class="note-actions">
+                <button ><a href="{%url 'delete'  object.pk%}">Delete Note</a></button>
+                <button ><a href="{%url 'edit' object.pk%}">Edit note</a></button>
+            </div>
+        </div>
+    </div>
+
+    
+    </div>
+
+    <script>
+        function openEditor() {
+            const title = document.getElementById('noteTitle').innerText;
+            const content = document.getElementById('noteContent').innerText;
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editContent').value = content;
+            document.getElementById('editor').style.display = 'block';
+        }
+
+        function closeEditor() {
+            document.getElementById('editor').style.display = 'none';
+        }
+
+        function saveChanges() {
+            const title = document.getElementById('editTitle').value;
+            const content = document.getElementById('editContent').value;
+            if (title && content) {
+                document.getElementById('noteTitle').innerText = title;
+                document.getElementById('noteContent').innerText = content;
+                closeEditor();
+            } else {
+                alert('Please fill in both fields.');
+            }
+        }
+
+        function deleteNote() {
+            if (confirm('Are you sure you want to delete this note?')) {
+                // Code to delete the note
+                alert('Note deleted!');
+            }
+        }
+    </script>
+
+{%endblock%}

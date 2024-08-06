@@ -1,0 +1,16 @@
+{%extends 'Products/base.html'%}
+{%load static%}
+
+
+{%block content%}
+<div>feel welcomed</div>
+
+{%for product in products%}
+    <h3>Meal type: {{product.name}}</h3><p>Order date {{product.order_date}}</p>
+    <h3>Meal Brand: {{product.brand}}</h3>
+    <h4>Price: {{product.price}}</h4>
+    
+    <h4>Quantity: {{product.quantity}}</h4>
+    <p>About food: {{product.description}}</p>
+{%endfor%}
+{%endblock%}

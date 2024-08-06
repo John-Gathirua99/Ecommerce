@@ -1,0 +1,24 @@
+{%extends 'Notes/base.html'%}
+{% load crispy_forms_tags %}
+{%load static %}
+{%block content%}
+
+<link rel="stylesheet" href="{%static 'Notes/create.css'%}">
+<div class="form-container">
+    <h1>Add Your Note</h1>
+    <form action="" method="post">
+        {%csrf_token%}
+        
+        {{form|crispy}}
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+        
+    </form>
+</div>
+{%endblock%}
+
+    
+
+
+

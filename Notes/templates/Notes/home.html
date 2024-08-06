@@ -1,0 +1,139 @@
+{%extends 'Notes/base.html'%}
+
+{%block content%}
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .notes-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .note {
+            background: #fff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .note-title {
+            font-size: 18px;
+            margin: 0;
+        }
+        .note-content {
+            color: #666;
+        }
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 30px;
+            text-align: center;
+        }
+        .fab:hover {
+            background: #0056b3;
+        }
+        .note-editor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+        .note-editor textarea {
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+        .note-editor button {
+            margin-top: 10px;
+        }
+    </style>
+
+    <header>
+        <h1>My Notes</h1>
+    </header>
+
+    <div class="container">
+        <div class="notes-list">
+            {%for note in notes%}
+            <div class="note">
+                <h2 class="note-title">{{request.user}} Note</h2>
+                <p class="note-content">
+                    
+                    <h3><a href="{%url 'detail' note.pk%}">{{note.notes}}</a></h3>by: <a href="{%url 'detail' note.pk%}">{{note.author}}</a>
+                    <h3>{{note.description}}</h3>
+                    
+                    </p>
+            </div>
+            {%endfor%}
+            <!-- Add more notes here -->
+        </div>
+    </div>
+
+    <div class="fab"><a href="{%url 'new-note'%}">+</a></div>
+
+    
+
+    <script>
+        function openEditor() {
+            document.getElementById('editor').style.display = 'block';
+        }
+
+        function closeEditor() {
+            document.getElementById('editor').style.display = 'none';
+        }
+
+        function saveNote() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+            if (title && content) {
+                const notesList = document.querySelector('.notes-list');
+                const noteElement = document.createElement('div');
+                noteElement.classList.add('note');
+                noteElement.innerHTML = `
+                    <h2 class="note-title">${title}</h2>
+                    <p class="note-content">${content}</p>
+                `;
+                notesList.appendChild(noteElement);
+                closeEditor();
+            } else {
+                alert('Please fill in both fields.');
+            }
+        }
+    </script>
+
+
+{%endblock%}
